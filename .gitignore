@@ -1,0 +1,20 @@
+### /Users/jangorman/.gitignore-boilerplates/Java.gitignore
+
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+target/
+
+
+### /Users/jangorman/.gitignore-boilerplates/Global/IntelliJ.gitignore
+
+*.iml
+*.ipr
+*.iws
+.idea/
+
+
