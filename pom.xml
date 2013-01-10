@@ -8,11 +8,21 @@
     <artifactId>jersey-passbook</artifactId>
     <version>1.0</version>
 
+    <properties>
+        <dropwizard.version>0.6.1</dropwizard.version>
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>com.yammer.dropwizard</groupId>
             <artifactId>dropwizard-core</artifactId>
-            <version>0.6.1</version>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yammer.dropwizard</groupId>
+            <artifactId>dropwizard-hibernate</artifactId>
+            <version>${dropwizard.version}</version>
         </dependency>
     </dependencies>
 
