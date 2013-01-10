@@ -1,13 +1,13 @@
-package com.passbook.db;
+package com.passbook.core;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * User: jangorman
  * Date: 10.01.13
  */
+@Entity
+@Table(name = "registrations")
 public class Registration {
 
     @Id
