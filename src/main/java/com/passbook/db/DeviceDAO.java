@@ -12,6 +12,7 @@ public class DeviceDAO extends AbstractDAO<Device> {
     }
 
     public Optional<Device> findByPassTypeIdentifierAndSerialNumber(String passTypeIdentifier, String serialNumber) {
+        // Dodgy
         return (Optional<Device>) Optional.fromNullable(namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber")
                 .setString("passTypeIdentifier", passTypeIdentifier).setString("serialNumber", serialNumber).uniqueResult());
     }
