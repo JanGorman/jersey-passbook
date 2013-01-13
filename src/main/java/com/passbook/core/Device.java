@@ -2,6 +2,7 @@ package com.passbook.core;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
@@ -17,9 +18,11 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Index(name = "pass_type_identifier_idx")
     @Column(name = "pass_type_identifier", nullable = false)
     private String passTypeIdentifier;
 
+    @Index(name = "serial_number_idx")
     @Column(name = "serial_number", nullable = false)
     private String serialNumber;
 

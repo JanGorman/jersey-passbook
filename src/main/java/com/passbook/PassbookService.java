@@ -4,10 +4,6 @@ import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 
-/**
- * User: jangorman
- * Date: 10.01.13
- */
 public class PassbookService extends Service<PassbookConfiguration> {
 
     public static void main(String[] args) throws Exception {

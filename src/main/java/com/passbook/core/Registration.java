@@ -1,6 +1,7 @@
 package com.passbook.core;
 
 import com.google.common.base.Objects;
+import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ public class Registration {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Index(name = "device_library_identifier_idx")
     @Column(name = "device_library_identifier", nullable = false)
     private String deviceLibraryIdentifier;
 
