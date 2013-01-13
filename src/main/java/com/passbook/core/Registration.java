@@ -1,11 +1,10 @@
 package com.passbook.core;
 
+import com.google.common.base.Objects;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
-/**
- * User: jangorman
- * Date: 10.01.13
- */
 @Entity
 @Table(name = "passbook_registrations")
 public class Registration {
@@ -20,4 +19,62 @@ public class Registration {
     @Column(name = "push_token", nullable = false)
     private String pushToken;
 
+    @Type(type = "timestamp")
+    @Column(name = "created_at", nullable = false)
+    private long createdAt;
+
+    @Type(type = "timestamp")
+    @Column(name = "updated_at", nullable = false)
+    private long updatedAt;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getDeviceLibraryIdentifier() {
+        return deviceLibraryIdentifier;
+    }
+
+    public void setDeviceLibraryIdentifier(String deviceLibraryIdentifier) {
+        this.deviceLibraryIdentifier = deviceLibraryIdentifier;
+    }
+
+    public String getPushToken() {
+        return pushToken;
+    }
+
+    public void setPushToken(String pushToken) {
+        this.pushToken = pushToken;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+                .add("id", id)
+                .add("deviceLibraryIdentifier", deviceLibraryIdentifier)
+                .add("pushToken", pushToken)
+                .add("createdAt", createdAt)
+                .add("updatedAt", updatedAt)
+                .toString();
+    }
 }
