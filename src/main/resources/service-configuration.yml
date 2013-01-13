@@ -1,0 +1,25 @@
+database:
+    driverClass: org.postgresql.Driver
+
+    user: root
+
+    password: root
+
+    url: jdbc:postgresql://db.example.com/db-prod
+
+    properties:
+        charSet: UTF-8
+
+    maxWaitForConnection: 1s
+
+    validationQuery: "/* Health Check */ SELECT 1"
+
+    minSize: 8
+
+    maxSize: 32
+
+    checkConnectionWhileIdle: false
+
+    checkConnectionHealthWhenIdleFor: 10s
+
+    closeConnectionIfIdleFor: 1 minute
