@@ -3,12 +3,14 @@ package com.passbook.core;
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Map;
 
 @Entity
 @Table(name = "passbook_devices")
+@TypeDef(name = "hstore", typeClass = HstoreUserType.class)
 public class Device {
 
     @Id
