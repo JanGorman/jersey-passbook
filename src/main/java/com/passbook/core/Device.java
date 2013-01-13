@@ -13,6 +13,13 @@ import java.util.Set;
 @Entity
 @Table(name = "passbook_devices")
 @TypeDef(name = "hstore", typeClass = HstoreUserType.class)
+@NamedQueries({
+        @NamedQuery(
+                name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
+                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+                        "AND d.serial_number = :serialNumber"
+        )
+})
 public class Device {
 
     @Id
