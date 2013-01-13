@@ -6,12 +6,12 @@ import com.google.common.collect.Sets;
 
 import java.util.Set;
 
-public class Log {
+public class LogEntry {
 
     @JsonProperty
     private Set<String> logs = Sets.newHashSet();
 
-    public Log(Set<String> logs) {
+    public LogEntry(Set<String> logs) {
         this.logs = logs;
     }
 

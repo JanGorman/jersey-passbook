@@ -23,3 +23,15 @@ database:
     checkConnectionHealthWhenIdleFor: 10s
 
     closeConnectionIfIdleFor: 1 minute
+
+logging:
+
+    enabled: false
+
+    level: INFO
+
+    currentLogFormat: ./logs/passbook.logEntry
+
+    archivedLogFilenamePattern: ./logs/passbook-%d.logEntry.gz
+
+    archivedFileCount: 10

@@ -7,4 +7,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/v1/passes")
 @Produces(MediaType.APPLICATION_JSON)
 public class PassbookPassesResource {
+
+
+
 }

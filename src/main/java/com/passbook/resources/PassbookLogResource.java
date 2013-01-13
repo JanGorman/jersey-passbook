@@ -1,6 +1,8 @@
 package com.passbook.resources;
 
-import com.passbook.api.Log;
+import com.passbook.api.LogEntry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.validation.Valid;
 import javax.ws.rs.POST;
@@ -13,9 +15,11 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 public class PassbookLogResource {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(PassbookLogResource.class);
+
     @POST
-    public Response log(@Valid Log log) {
-        // Where to log?
+    public Response log(@Valid LogEntry logEntry) {
+        LOGGER.debug("Log {}", logEntry);
         return Response.ok().build();
     }
 

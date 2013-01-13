@@ -1,6 +1,7 @@
 package com.passbook.resources;
 
 import com.google.common.base.Optional;
+import com.passbook.api.PushToken;
 import com.passbook.core.Device;
 import com.passbook.db.DeviceDAO;
 
@@ -22,7 +23,8 @@ public class PassbookDevicesResource {
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}")
     public Response registerDevice(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                    @PathParam("passTypeIdentifier") String passTypeIdentifier,
-                                   @PathParam("serialNumber") String serialNumber) {
+                                   @PathParam("serialNumber") String serialNumber,
+                                   PushToken pushToken) {
         Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
         if (!device.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
