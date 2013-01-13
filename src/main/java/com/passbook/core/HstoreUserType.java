@@ -8,61 +8,71 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HstoreUserType implements UserType {
 
     @Override
     public int[] sqlTypes() {
-        return new int[0];  //To change body of implemented methods use File | Settings | File Templates.
+        return new int[]{Types.INTEGER};
     }
 
     @Override
     public Class returnedClass() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return Map.class;
     }
 
     @Override
     public boolean equals(Object o, Object o1) throws HibernateException {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        Map m = (Map) o;
+        Map m1 = (Map) o1;
+        return m.equals(m1);
     }
 
     @Override
     public int hashCode(Object o) throws HibernateException {
-        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+        return o.hashCode();
     }
 
     @Override
-    public Object nullSafeGet(ResultSet resultSet, String[] strings, SessionImplementor sessionImplementor, Object o) throws HibernateException, SQLException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Object nullSafeGet(ResultSet resultSet, String[] strings, SessionImplementor sessionImplementor, Object o)
+            throws HibernateException, SQLException {
+        String val = resultSet.getString(strings[0]);
+        return HstoreHelper.toMap(val);
     }
 
     @Override
-    public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SessionImplementor sessionImplementor) throws HibernateException, SQLException {
-        //To change body of implemented methods use File | Settings | File Templates.
+    public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SessionImplementor sessionImplementor)
+            throws HibernateException, SQLException {
+        String s = HstoreHelper.toString((Map<String, String>) o);
+        preparedStatement.setObject(i, s, Types.OTHER);
     }
 
     @Override
     public Object deepCopy(Object o) throws HibernateException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        Map map = (Map) o;
+        return new HashMap<String, String>(map);
     }
 
     @Override
     public boolean isMutable() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return true;
     }
 
     @Override
     public Serializable disassemble(Object o) throws HibernateException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return (Serializable) o;
     }
 
     @Override
     public Object assemble(Serializable serializable, Object o) throws HibernateException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return serializable;
     }
 
     @Override
     public Object replace(Object o, Object o1, Object o2) throws HibernateException {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return o;
     }
 }
