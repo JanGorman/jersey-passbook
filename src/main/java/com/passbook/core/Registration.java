@@ -29,6 +29,10 @@ public class Registration {
     @Column(name = "updated_at", nullable = false)
     private long updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Device device;
+
     public long getId() {
         return id;
     }
@@ -69,6 +73,14 @@ public class Registration {
         this.updatedAt = updatedAt;
     }
 
+    public Device getDevice() {
+        return device;
+    }
+
+    public void setDevice(Device device) {
+        this.device = device;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -77,6 +89,7 @@ public class Registration {
                 .add("pushToken", pushToken)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
+                .add("device", device)
                 .toString();
     }
 }

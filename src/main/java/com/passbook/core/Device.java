@@ -8,6 +8,7 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "passbook_devices")
@@ -40,6 +41,10 @@ public class Device {
     @Type(type = "timestamp")
     @Column(name = "updated_at", nullable = false)
     private long updatedAt;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "device")
+    @Column(name = "passbook_devices_id")
+    private Set<Registration> registrations;
 
     public long getId() {
         return id;
@@ -97,6 +102,14 @@ public class Device {
         this.updatedAt = updatedAt;
     }
 
+    public Set<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(Set<Registration> registrations) {
+        this.registrations = registrations;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -107,6 +120,7 @@ public class Device {
                 .add("data", data)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
+                .add("registrations", registrations)
                 .toString();
     }
 }
