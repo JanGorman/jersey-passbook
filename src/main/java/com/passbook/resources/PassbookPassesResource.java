@@ -21,7 +21,7 @@ public class PassbookPassesResource {
     }
 
     @GET
-    @Path("/{passTypeIdentifier}/{serialNumber")
+    @Path("/{passTypeIdentifier}/{serialNumber}")
     public Response getLatest(@PathParam("passTypeIdentifier") String passTypeIdentifier,
                               @PathParam("serialNumber") String serialNumber) {
 
