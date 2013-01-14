@@ -10,4 +10,8 @@ public class RegistrationDAO extends AbstractDAO<Registration> {
         super(sessionFactory);
     }
 
+    public Registration create(Registration registration) {
+        return persist(registration);
+    }
+
 }
