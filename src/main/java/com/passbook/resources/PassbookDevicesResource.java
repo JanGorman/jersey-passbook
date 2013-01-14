@@ -2,7 +2,6 @@ package com.passbook.resources;
 
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.passbook.api.Pass;
 import com.passbook.api.PushToken;
@@ -12,13 +11,8 @@ import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
 
 import javax.annotation.Nullable;
-import javax.swing.plaf.multi.MultiViewportUI;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.util.List;
 
 @Path("/v1/devices")
@@ -27,7 +21,7 @@ public class PassbookDevicesResource {
 
     private static final String HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION";
     private static final String TOKEN = "ApplePass %s";
-    
+
     private static final Function<Device, Pass> TRANSFORM = new Function<Device, Pass>() {
         @Override
         public Pass apply(@Nullable final Device device) {
@@ -37,7 +31,7 @@ public class PassbookDevicesResource {
             return null;
         }
     };
-    
+
     private final DeviceDAO deviceDAO;
 
     private final RegistrationDAO registrationDAO;
@@ -46,8 +40,8 @@ public class PassbookDevicesResource {
         this.deviceDAO = deviceDAO;
         this.registrationDAO = registrationDAO;
     }
-    
-    
+
+
     @GET
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{updatedSince}")
     public List<Pass> getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
@@ -72,7 +66,7 @@ public class PassbookDevicesResource {
         if (passes.isEmpty()) {
             throw new WebApplicationException(Response.Status.NO_CONTENT);
         }
-        
+
         return Lists.transform(passes, TRANSFORM);
     }
 
@@ -136,7 +130,7 @@ public class PassbookDevicesResource {
         if (!registration.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        
+
         registrationDAO.destroy(registration.get());
 
         return Response.ok().build();

@@ -1,7 +1,6 @@
 package com.passbook.db;
 
 import com.google.common.base.Optional;
-import com.google.common.collect.Lists;
 import com.passbook.core.Device;
 import com.yammer.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
