@@ -49,7 +49,7 @@ public class PassbookDevicesResource {
 
         // Already registered?
         for (Registration registration : device.get().getRegistrations()) {
-            if (pushToken.getPushToken().equals(registration)) {
+            if (pushToken.getPushToken().equals(registration.getPushToken())) {
                 return Response.ok().build();
             }
         }
