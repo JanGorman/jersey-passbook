@@ -56,6 +56,7 @@ public class PassbookDevicesResource {
 
         Registration registration = new Registration();
         registration.setCreatedAt(System.currentTimeMillis());
+        registration.setUpdatedAt(System.currentTimeMillis());
         registration.setDeviceLibraryIdentifier(deviceLibraryIdentifier);
         registration.setDevice(device.get());
 
@@ -79,8 +80,21 @@ public class PassbookDevicesResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
+        Optional<Registration> registration = Optional.absent();
+        for (Registration item : device.get().getRegistrations()) {
+            if (deviceLibraryIdentifier.equals(item.getDeviceLibraryIdentifier())) {
+                registration = Optional.of(item);
+                break;
+            }
+        }
 
-        return null;
+        if (!registration.isPresent()) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        
+        registrationDAO.destroy(registration.get());
+
+        return Response.ok().build();
     }
 
     private boolean isAuthorized(HttpHeaders headers, Device device) {

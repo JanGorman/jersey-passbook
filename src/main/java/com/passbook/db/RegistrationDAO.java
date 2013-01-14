@@ -14,4 +14,10 @@ public class RegistrationDAO extends AbstractDAO<Registration> {
         return persist(registration);
     }
 
+    public void destroy(Registration registration) {
+        namedQuery("com.passbook.core.Registration.destroy")
+                .setString("deviceLibraryIdentifier", registration.getDeviceLibraryIdentifier())
+                .executeUpdate();
+    }
+
 }

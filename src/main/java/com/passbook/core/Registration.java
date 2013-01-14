@@ -8,6 +8,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "passbook_registrations")
+@NamedQueries({
+        @NamedQuery(
+                name = "com.passbook.core.Registration.destroy",
+                query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
+        )
+})
 public class Registration {
 
     @Id
