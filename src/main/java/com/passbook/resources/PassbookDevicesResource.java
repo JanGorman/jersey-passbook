@@ -7,14 +7,21 @@ import com.passbook.core.Registration;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
 
+import javax.swing.plaf.multi.MultiViewportUI;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
 @Path("/v1/devices")
 @Produces(MediaType.APPLICATION_JSON)
 public class PassbookDevicesResource {
 
+    private static final String HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION";
+    private static final String TOKEN = "ApplePass %s";
+    
     private final DeviceDAO deviceDAO;
 
     private final RegistrationDAO registrationDAO;
@@ -26,13 +33,18 @@ public class PassbookDevicesResource {
 
     @POST
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}")
-    public Response registerDevice(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
+    public Response registerDevice(@Context HttpHeaders headers,
+                                   @PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                    @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                    @PathParam("serialNumber") String serialNumber,
                                    PushToken pushToken) {
         Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
         if (!device.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        if (!isAuthorized(headers, device.get())) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
         // Already registered?
@@ -54,7 +66,8 @@ public class PassbookDevicesResource {
 
     @DELETE
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}")
-    public Response unregisterDevice(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
+    public Response unregisterDevice(@Context HttpHeaders headers,
+                                     @PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                      @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                      @PathParam("serialNumber") String serialNumber) {
         Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
@@ -62,8 +75,17 @@ public class PassbookDevicesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
+        if (!isAuthorized(headers, device.get())) {
+            return Response.status(Response.Status.UNAUTHORIZED).build();
+        }
+
 
         return null;
+    }
+
+    private boolean isAuthorized(HttpHeaders headers, Device device) {
+        MultivaluedMap<String, String> headerParams = headers.getRequestHeaders();
+        return String.format(TOKEN, device.getAuthenticationToken()).equals(headerParams.getFirst(HTTP_AUTHORIZATION));
     }
 
 }
