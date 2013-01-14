@@ -1,12 +1,17 @@
 package com.passbook.resources;
 
+import com.google.common.base.Function;
 import com.google.common.base.Optional;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.passbook.api.Pass;
 import com.passbook.api.PushToken;
 import com.passbook.core.Device;
 import com.passbook.core.Registration;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
 
+import javax.annotation.Nullable;
 import javax.swing.plaf.multi.MultiViewportUI;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -14,6 +19,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.util.List;
 
 @Path("/v1/devices")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,6 +28,16 @@ public class PassbookDevicesResource {
     private static final String HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION";
     private static final String TOKEN = "ApplePass %s";
     
+    private static final Function<Device, Pass> TRANSFORM = new Function<Device, Pass>() {
+        @Override
+        public Pass apply(@Nullable final Device device) {
+            if (device != null) {
+                return new Pass(device.getUpdatedAt(), device.getSerialNumber());
+            }
+            return null;
+        }
+    };
+    
     private final DeviceDAO deviceDAO;
 
     private final RegistrationDAO registrationDAO;
@@ -29,6 +45,35 @@ public class PassbookDevicesResource {
     public PassbookDevicesResource(DeviceDAO deviceDAO, final RegistrationDAO registrationDAO) {
         this.deviceDAO = deviceDAO;
         this.registrationDAO = registrationDAO;
+    }
+    
+    
+    @GET
+    @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{updatedSince}")
+    public List<Pass> getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
+                                       @PathParam("passTypeIdentifier") String passTypeIdentifier,
+                                       @PathParam("updatedSince") Optional<Long> updatedSince) {
+        List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(deviceLibraryIdentifier, passTypeIdentifier);
+        if (result.isEmpty()) {
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
+        }
+
+        List<Device> passes = Lists.newArrayList();
+        if (updatedSince.isPresent()) {
+            for (Device device : result) {
+                if (device.getUpdatedAt() > updatedSince.get()) {
+                    passes.add(device);
+                }
+            }
+        } else {
+            passes.addAll(result);
+        }
+
+        if (passes.isEmpty()) {
+            throw new WebApplicationException(Response.Status.NO_CONTENT);
+        }
+        
+        return Lists.transform(passes, TRANSFORM);
     }
 
     @POST

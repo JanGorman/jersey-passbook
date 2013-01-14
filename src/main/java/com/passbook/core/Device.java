@@ -18,6 +18,12 @@ import java.util.Set;
                 name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
                 query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
                         "AND d.serial_number = :serialNumber"
+        ),
+        @NamedQuery(
+                name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
+                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+                        "JOIN passbook_registrations r ON d.id = r.devices_id " +
+                        "AND r.device_library_identifier = :deviceLibraryIdentifier"
         )
 })
 public class Device {
