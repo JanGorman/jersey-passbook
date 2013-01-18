@@ -9,6 +9,7 @@ import com.passbook.core.Device;
 import com.passbook.core.Registration;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
+import com.passbook.helper.Authenticator;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.*;
@@ -18,9 +19,6 @@ import java.util.List;
 @Path("/v1/devices")
 @Produces(MediaType.APPLICATION_JSON)
 public class PassbookDevicesResource {
-
-    private static final String HTTP_AUTHORIZATION = "HTTP_AUTHORIZATION";
-    private static final String TOKEN = "ApplePass %s";
 
     private static final Function<Device, Pass> TRANSFORM = new Function<Device, Pass>() {
         @Override
@@ -82,7 +80,7 @@ public class PassbookDevicesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (!isAuthorized(headers, device.get())) {
+        if (!Authenticator.isAuthorized(headers, device.get())) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
@@ -115,7 +113,7 @@ public class PassbookDevicesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (!isAuthorized(headers, device.get())) {
+        if (!Authenticator.isAuthorized(headers, device.get())) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
@@ -134,11 +132,6 @@ public class PassbookDevicesResource {
         registrationDAO.destroy(registration.get());
 
         return Response.ok().build();
-    }
-
-    private boolean isAuthorized(HttpHeaders headers, Device device) {
-        MultivaluedMap<String, String> headerParams = headers.getRequestHeaders();
-        return String.format(TOKEN, device.getAuthenticationToken()).equals(headerParams.getFirst(HTTP_AUTHORIZATION));
     }
 
 }
