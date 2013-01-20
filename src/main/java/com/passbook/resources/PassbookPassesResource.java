@@ -1,6 +1,5 @@
 package com.passbook.resources;
 
-import com.google.common.base.Optional;
 import com.passbook.api.Pass;
 import com.passbook.core.Device;
 import com.passbook.db.DeviceDAO;
@@ -32,17 +31,17 @@ public class PassbookPassesResource {
     public Response getLatest(@Context HttpHeaders headers,
                               @PathParam("passTypeIdentifier") String passTypeIdentifier,
                               @PathParam("serialNumber") String serialNumber) {
-        Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
-        if (!device.isPresent()) {
+        Device device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
+        if (device != null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (!Authenticator.isAuthorized(headers, device.get())) {
+        if (!Authenticator.isAuthorized(headers, device)) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        return Response.ok(new Pass(device.get().getUpdatedAt(), serialNumber))
-                .lastModified(new DateTime(device.get().getUpdatedAt(), DateTimeZone.UTC).toDate())
+        return Response.ok(new Pass(device.getUpdatedAt(), serialNumber))
+                .lastModified(new DateTime(device.getUpdatedAt(), DateTimeZone.UTC).toDate())
                 .build();
     }
 
