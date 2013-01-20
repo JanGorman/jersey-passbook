@@ -2,61 +2,29 @@ package com.passbook.core;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
 import java.util.Map;
 import java.util.Set;
 
-@Entity
-@Table(name = "passbook_devices")
-@TypeDef(name = "hstore", typeClass = HstoreUserType.class)
-@NamedQueries({
-        @NamedQuery(
-                name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
-                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-                        "AND d.serial_number = :serialNumber"
-        ),
-        @NamedQuery(
-                name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
-                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-                        "JOIN passbook_registrations r ON d.id = r.devices_id " +
-                        "AND r.device_library_identifier = :deviceLibraryIdentifier"
-        )
-})
 public class Device {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Index(name = "pass_type_identifier_idx")
-    @Column(name = "pass_type_identifier", nullable = false)
+    // pass_type_identifier_idx
     private String passTypeIdentifier;
 
-    @Index(name = "serial_number_idx")
-    @Column(name = "serial_number", nullable = false)
+    // serial_number_idx
     private String serialNumber;
 
-    @Column(name = "authentication_token", nullable = false)
     private String authenticationToken;
 
-    @Type(type = "hstore")
-    @Column(name = "data")
+    //    @Type(type = "hstore")
     private Map<String, String> data = Maps.newHashMap();
 
-    @Type(type = "timestamp")
-    @Column(name = "created_at", nullable = false)
     private long createdAt;
 
-    @Type(type = "timestamp")
-    @Column(name = "updated_at", nullable = false)
     private long updatedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "device")
-    @Column(name = "passbook_devices_id")
     private Set<Registration> registrations;
 
     public long getId() {

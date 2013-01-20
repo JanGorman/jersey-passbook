@@ -1,43 +1,19 @@
 package com.passbook.core;
 
 import com.google.common.base.Objects;
-import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "passbook_registrations")
-@NamedQueries({
-        @NamedQuery(
-                name = "com.passbook.core.Registration.destroy",
-                query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
-        )
-})
 public class Registration {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Index(name = "device_library_identifier_idx")
-    @Column(name = "device_library_identifier", nullable = false)
+    // device_library_identifier_idx
     private String deviceLibraryIdentifier;
 
-    @Column(name = "push_token", nullable = false)
     private String pushToken;
 
-    @Type(type = "timestamp")
-    @Column(name = "created_at", nullable = false)
     private long createdAt;
 
-    @Type(type = "timestamp")
-    @Column(name = "updated_at", nullable = false)
     private long updatedAt;
-
-    @ManyToOne
-    @JoinColumn(name = "id")
-    private Device device;
 
     public long getId() {
         return id;
@@ -79,14 +55,6 @@ public class Registration {
         this.updatedAt = updatedAt;
     }
 
-    public Device getDevice() {
-        return device;
-    }
-
-    public void setDevice(Device device) {
-        this.device = device;
-    }
-
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -95,7 +63,6 @@ public class Registration {
                 .add("pushToken", pushToken)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
-                .add("device", device)
                 .toString();
     }
 }
