@@ -3,6 +3,7 @@ package com.passbook;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
 import com.passbook.resources.PassbookDevicesResource;
+import com.passbook.resources.PassbookLogResource;
 import com.passbook.resources.PassbookPassesResource;
 import com.yammer.dropwizard.Service;
 import com.yammer.dropwizard.config.Bootstrap;
@@ -29,5 +30,6 @@ public class PassbookService extends Service<PassbookConfiguration> {
 
         environment.addResource(new PassbookDevicesResource(deviceDAO, registrationDAO));
         environment.addResource(new PassbookPassesResource(deviceDAO));
+        environment.addResource(new PassbookLogResource());
     }
 }
