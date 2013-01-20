@@ -99,8 +99,7 @@ public class PassbookDevicesResource {
         registration.setUpdatedAt(System.currentTimeMillis());
         registration.setDeviceLibraryIdentifier(deviceLibraryIdentifier);
 
-        registrationDAO.create(registration.getDeviceLibraryIdentifier(), registration.getPushToken(),
-                registration.getCreatedAt(), registration.getUpdatedAt());
+        registrationDAO.create(registration);
 
         return Response.status(Response.Status.CREATED).build();
     }
