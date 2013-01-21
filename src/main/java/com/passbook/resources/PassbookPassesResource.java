@@ -32,7 +32,7 @@ public class PassbookPassesResource {
                               @PathParam("passTypeIdentifier") String passTypeIdentifier,
                               @PathParam("serialNumber") String serialNumber) {
         Device device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
-        if (device != null) {
+        if (device == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
