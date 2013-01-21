@@ -4,22 +4,15 @@ import com.google.common.base.Objects;
 import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "passbook_registrations")
 @NamedQueries({
-    @NamedQuery(
-        name = "com.passbook.core.Registration.destroy",
-        query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
-    )
+        @NamedQuery(
+                name = "com.passbook.core.Registration.destroy",
+                query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
+        )
 })
 public class Registration {
 

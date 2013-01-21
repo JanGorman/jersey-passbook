@@ -6,14 +6,7 @@ import org.hibernate.annotations.Index;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,18 +14,18 @@ import java.util.Set;
 @Table(name = "passbook_devices")
 @TypeDef(name = "hstore", typeClass = HstoreUserType.class)
 @NamedQueries({
-    @NamedQuery(
-        name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
-        query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-            "AND d.serial_number = :serialNumber"
-        
-    ),
-    @NamedQuery(
-        name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
-        query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-            "JOIN passbook_registrations r ON d.id = r.devices_id " +
-            "AND r.device_library_identifier = :deviceLibraryIdentifier"
-    )
+        @NamedQuery(
+                name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
+                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+                        "AND d.serial_number = :serialNumber"
+
+        ),
+        @NamedQuery(
+                name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
+                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+                        "JOIN passbook_registrations r ON d.id = r.devices_id " +
+                        "AND r.device_library_identifier = :deviceLibraryIdentifier"
+        )
 })
 public class Device {
 

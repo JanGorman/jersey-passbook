@@ -10,8 +10,6 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
-import com.yammer.dropwizard.jdbi.DBIFactory;
-import org.skife.jdbi.v2.DBI;
 
 public class PassbookService extends Service<PassbookConfiguration> {
 
