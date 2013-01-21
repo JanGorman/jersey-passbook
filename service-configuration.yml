@@ -1,9 +1,9 @@
 database:
     driverClass: org.postgresql.Driver
 
-    user: root
+    user: postgres
 
-    password: root
+    password: postgres
 
     url: jdbc:postgresql://postgres:postgres@localhost:5433/passbook_example
 
