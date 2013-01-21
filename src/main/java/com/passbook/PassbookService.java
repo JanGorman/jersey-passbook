@@ -4,6 +4,7 @@ import com.passbook.core.Device;
 import com.passbook.core.Registration;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
+import com.passbook.resources.PassbookDevicesResource;
 import com.passbook.resources.PassbookLogResource;
 import com.passbook.resources.PassbookPassesResource;
 import com.yammer.dropwizard.Service;
@@ -36,7 +37,7 @@ public class PassbookService extends Service<PassbookConfiguration> {
         final DeviceDAO deviceDAO = new DeviceDAO(hibernate.getSessionFactory());
         final RegistrationDAO registrationDAO = new RegistrationDAO(hibernate.getSessionFactory());
 
-//        environment.addResource(new PassbookDevicesResource(deviceDAO, registrationDAO));
+        environment.addResource(new PassbookDevicesResource(deviceDAO, registrationDAO));
         environment.addResource(new PassbookPassesResource(deviceDAO));
         environment.addResource(new PassbookLogResource());
     }

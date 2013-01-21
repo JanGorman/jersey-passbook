@@ -48,18 +48,18 @@ public class PassbookDevicesResource {
     @GET
     @UnitOfWork
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{updatedSince}")
-    public List<Pass> getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
-                                       @PathParam("passTypeIdentifier") String passTypeIdentifier,
-                                       @PathParam("updatedSince") Optional<Long> updatedSince) {
+    public Response getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
+                                     @PathParam("passTypeIdentifier") String passTypeIdentifier,
+                                     @PathParam("updatedSince") Long updatedSince) {
         List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(deviceLibraryIdentifier, passTypeIdentifier);
         if (result.isEmpty()) {
-            throw new WebApplicationException(Response.Status.NOT_FOUND);
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
 
         List<Device> passes = Lists.newArrayList();
-        if (updatedSince.isPresent()) {
+        if (updatedSince != null) {
             for (Device device : result) {
-                if (device.getUpdatedAt().getTime() > updatedSince.get()) {
+                if (device.getUpdatedAt().getTime() > updatedSince) {
                     passes.add(device);
                 }
             }
@@ -71,7 +71,7 @@ public class PassbookDevicesResource {
             throw new WebApplicationException(Response.Status.NO_CONTENT);
         }
 
-        return Lists.transform(passes, TRANSFORM);
+        return Response.ok(Lists.transform(passes, TRANSFORM).toArray()).build();
     }
 
     @POST
