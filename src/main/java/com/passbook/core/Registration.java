@@ -1,18 +1,45 @@
 package com.passbook.core;
 
 import com.google.common.base.Objects;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "passbook_registrations")
+@NamedQueries({
+    @NamedQuery(
+        name = "com.passbook.core.Registration.destroy",
+        query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
+    )
+})
 public class Registration {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // device_library_identifier_idx
+    @Index(name = "device_library_identifier_idx")
+    @Column(name = "device_library_identifier", nullable = false)
     private String deviceLibraryIdentifier;
 
+    @Column(name = "push_token", nullable = false)
     private String pushToken;
 
+    @Type(type = "timestamp")
+    @Column(name = "created_at", nullable = false)
     private long createdAt;
 
+    @Type(type = "timestamp")
+    @Column(name = "updated_at", nullable = false)
     private long updatedAt;
 
     public long getId() {

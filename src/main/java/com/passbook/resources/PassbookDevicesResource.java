@@ -131,7 +131,7 @@ public class PassbookDevicesResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        registrationDAO.destroy(registration.get().getDeviceLibraryIdentifier());
+        registrationDAO.destroy(registration.get());
 
         return Response.ok().build();
     }

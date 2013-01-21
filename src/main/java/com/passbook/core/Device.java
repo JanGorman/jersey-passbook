@@ -2,27 +2,65 @@ package com.passbook.core;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Maps;
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.util.Map;
 import java.util.Set;
 
+@Entity
+@Table(name = "passbook_devices")
+@TypeDef(name = "hstore", typeClass = HstoreUserType.class)
+@NamedQueries({
+    @NamedQuery(
+        name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
+        query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+            "AND d.serial_number = :serialNumber"
+        
+    ),
+    @NamedQuery(
+        name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
+        query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
+            "JOIN passbook_registrations r ON d.id = r.devices_id " +
+            "AND r.device_library_identifier = :deviceLibraryIdentifier"
+    )
+})
 public class Device {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    // pass_type_identifier_idx
+    @Index(name = "pass_type_identifier_idx")
+    @Column(name = "pass_type_identifier", nullable = false)
     private String passTypeIdentifier;
 
-    // serial_number_idx
+    @Index(name = "serial_number_idx")
+    @Column(name = "serial_number", nullable = false)
     private String serialNumber;
 
+    @Column(name = "authentication_token", nullable = false)
     private String authenticationToken;
 
-    //    @Type(type = "hstore")
+    @Type(type = "hstore")
+    @Column(name = "data")
     private Map<String, String> data = Maps.newHashMap();
 
+    @Type(type = "timestamp")
+    @Column(name = "created_at", nullable = false)
     private long createdAt;
 
+    @Type(type = "timestamp")
+    @Column(name = "updated_at", nullable = false)
     private long updatedAt;
 
     private Set<Registration> registrations;

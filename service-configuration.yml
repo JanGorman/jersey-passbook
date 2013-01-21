@@ -5,7 +5,7 @@ database:
 
     password: root
 
-    url: jdbc:postgresql://localhost:5432/passbook_example
+    url: jdbc:postgresql://postgres:postgres@localhost:5433/passbook_example
 
     properties:
         charSet: UTF-8
@@ -23,6 +23,9 @@ database:
     checkConnectionHealthWhenIdleFor: 10s
 
     closeConnectionIfIdleFor: 1 minute
+
+    properties:
+        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
 
 #logging:
 #

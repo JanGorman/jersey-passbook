@@ -1,21 +1,30 @@
 package com.passbook.db;
 
 import com.passbook.core.Device;
+import com.yammer.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.SessionFactory;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 
 import java.util.List;
 
-public interface DeviceDAO {
+public class DeviceDAO extends AbstractDAO<Device> {
 
-    @SqlQuery("SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier AND d.serial_number = :serialNumber")
-    public Device findByPassTypeIdentifierAndSerialNumber(@Bind("passTypeIdentifier") String passTypeIdentifier,
-                                                          @Bind("serialNumber") String serialNumber);
+    public DeviceDAO(SessionFactory sessionFactory) {
+        super(sessionFactory);
+    }
+    
+    public Device findByPassTypeIdentifierAndSerialNumber(String passTypeIdentifier, String serialNumber) {
+        return (Device) namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber")
+                .setString("passTypeIdentifier", passTypeIdentifier)
+                .setString("serialNumber", serialNumber).uniqueResult();
+    }
 
-
-    @SqlQuery("SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier " +
-            "JOIN passbook_registrations r ON d.id = r.devices_id AND r.device_library_identifier = :deviceLibraryIdentifier")
-    public List<Device> findByPassTypeIdentifierAndDeviceLibraryIdentifier(@Bind("passTypeIdentifier") String passTypeIdentifier,
-                                                                           @Bind("deviceLibraryIdentifier") String deviceLibraryIdentifier);
+    public List<Device> findByPassTypeIdentifierAndDeviceLibraryIdentifier(String passTypeIdentifier, String deviceLibraryIdentifier) {
+        return namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier")
+                    .setString("passTypeIdentifier", passTypeIdentifier)
+                    .setString("deviceLibraryIdentifier", deviceLibraryIdentifier)
+                    .list();
+    }
 
 }
