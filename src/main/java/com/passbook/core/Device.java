@@ -7,8 +7,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Map;
-import java.util.Set;
 
 @Entity
 @Table(name = "passbook_devices")
@@ -16,15 +16,14 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = "com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber",
-                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-                        "AND d.serial_number = :serialNumber"
-
+                query = "SELECT d FROM Device d WHERE d.passTypeIdentifier = :passTypeIdentifier " +
+                        "AND d.serialNumber = :serialNumber"
         ),
         @NamedQuery(
                 name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
-                query = "SELECT d FROM passbook_devices d WHERE d.pass_type_identifier = :passTypeIdentifier" +
-                        "JOIN passbook_registrations r ON d.id = r.devices_id " +
-                        "AND r.device_library_identifier = :deviceLibraryIdentifier"
+                query = "SELECT d FROM Device d WHERE d.passTypeIdentifier = :passTypeIdentifier "
+//                        "JOIN Registration r ON d.id = r.id " +
+//                        "AND r.deviceLibraryIdentifier = :deviceLibraryIdentifier"
         )
 })
 public class Device {
@@ -48,15 +47,13 @@ public class Device {
     @Column(name = "data")
     private Map<String, String> data = Maps.newHashMap();
 
-    @Type(type = "timestamp")
     @Column(name = "created_at", nullable = false)
-    private long createdAt;
+    private Timestamp createdAt;
 
-    @Type(type = "timestamp")
     @Column(name = "updated_at", nullable = false)
-    private long updatedAt;
+    private Timestamp updatedAt;
 
-    private Set<Registration> registrations;
+//    private Set<Registration> registrations;
 
     public long getId() {
         return id;
@@ -98,29 +95,29 @@ public class Device {
         this.data = data;
     }
 
-    public long getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public long getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(long updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public Set<Registration> getRegistrations() {
-        return registrations;
-    }
-
-    public void setRegistrations(Set<Registration> registrations) {
-        this.registrations = registrations;
-    }
+    //    public Set<Registration> getRegistrations() {
+//        return registrations;
+//    }
+//
+//    public void setRegistrations(Set<Registration> registrations) {
+//        this.registrations = registrations;
+//    }
 
     @Override
     public String toString() {
@@ -132,7 +129,7 @@ public class Device {
                 .add("data", data)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
-                .add("registrations", registrations)
+//                .add("registrations", registrations)
                 .toString();
     }
 }

@@ -2,16 +2,16 @@ package com.passbook.core;
 
 import com.google.common.base.Objects;
 import org.hibernate.annotations.Index;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "passbook_registrations")
 @NamedQueries({
         @NamedQuery(
                 name = "com.passbook.core.Registration.destroy",
-                query = "DELETE FROM passbook_registrations r WHERE r.device_library_identifier = :deviceLibraryIdentifier"
+                query = "DELETE FROM Registration WHERE device_library_identifier = :deviceLibraryIdentifier"
         )
 })
 public class Registration {
@@ -27,13 +27,11 @@ public class Registration {
     @Column(name = "push_token", nullable = false)
     private String pushToken;
 
-    @Type(type = "timestamp")
     @Column(name = "created_at", nullable = false)
-    private long createdAt;
+    private Timestamp createdAt;
 
-    @Type(type = "timestamp")
     @Column(name = "updated_at", nullable = false)
-    private long updatedAt;
+    private Timestamp updatedAt;
 
     public long getId() {
         return id;
@@ -59,19 +57,19 @@ public class Registration {
         this.pushToken = pushToken;
     }
 
-    public long getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(long createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public long getUpdatedAt() {
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(long updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
     }
 

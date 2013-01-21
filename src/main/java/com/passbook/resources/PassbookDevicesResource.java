@@ -10,6 +10,7 @@ import com.passbook.core.Registration;
 import com.passbook.db.DeviceDAO;
 import com.passbook.db.RegistrationDAO;
 import com.passbook.helper.Authenticator;
+import com.yammer.dropwizard.hibernate.UnitOfWork;
 
 import javax.annotation.Nullable;
 import javax.ws.rs.*;
@@ -17,6 +18,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Path("/v1/devices")
@@ -27,7 +29,7 @@ public class PassbookDevicesResource {
         @Override
         public Pass apply(@Nullable final Device device) {
             if (device != null) {
-                return new Pass(device.getUpdatedAt(), device.getSerialNumber());
+                return new Pass(device.getUpdatedAt().getTime(), device.getSerialNumber());
             }
             return null;
         }
@@ -44,6 +46,7 @@ public class PassbookDevicesResource {
 
 
     @GET
+    @UnitOfWork
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{updatedSince}")
     public List<Pass> getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                        @PathParam("passTypeIdentifier") String passTypeIdentifier,
@@ -56,7 +59,7 @@ public class PassbookDevicesResource {
         List<Device> passes = Lists.newArrayList();
         if (updatedSince.isPresent()) {
             for (Device device : result) {
-                if (device.getUpdatedAt() > updatedSince.get()) {
+                if (device.getUpdatedAt().getTime() > updatedSince.get()) {
                     passes.add(device);
                 }
             }
@@ -72,31 +75,32 @@ public class PassbookDevicesResource {
     }
 
     @POST
+    @UnitOfWork
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}")
     public Response registerDevice(@Context HttpHeaders headers,
                                    @PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                    @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                    @PathParam("serialNumber") String serialNumber,
                                    PushToken pushToken) {
-        Device device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
-        if (device == null) {
+        Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
+        if (!device.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (!Authenticator.isAuthorized(headers, device)) {
+        if (!Authenticator.isAuthorized(headers, device.get())) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
         // Already registered?
-        for (Registration registration : device.getRegistrations()) {
-            if (pushToken.getPushToken().equals(registration.getPushToken())) {
-                return Response.ok().build();
-            }
-        }
+//        for (Registration registration : device.getRegistrations()) {
+//            if (pushToken.getPushToken().equals(registration.getPushToken())) {
+//                return Response.ok().build();
+//            }
+//        }
 
         Registration registration = new Registration();
-        registration.setCreatedAt(System.currentTimeMillis());
-        registration.setUpdatedAt(System.currentTimeMillis());
+        registration.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        registration.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         registration.setDeviceLibraryIdentifier(deviceLibraryIdentifier);
 
         registrationDAO.create(registration);
@@ -105,27 +109,28 @@ public class PassbookDevicesResource {
     }
 
     @DELETE
+    @UnitOfWork
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}")
     public Response unregisterDevice(@Context HttpHeaders headers,
                                      @PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                      @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                      @PathParam("serialNumber") String serialNumber) {
-        Device device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
-        if (device == null) {
+        Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
+        if (!device.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        if (!Authenticator.isAuthorized(headers, device)) {
+        if (!Authenticator.isAuthorized(headers, device.get())) {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
         Optional<Registration> registration = Optional.absent();
-        for (Registration item : device.getRegistrations()) {
-            if (deviceLibraryIdentifier.equals(item.getDeviceLibraryIdentifier())) {
-                registration = Optional.of(item);
-                break;
-            }
-        }
+//        for (Registration item : device.getRegistrations()) {
+//            if (deviceLibraryIdentifier.equals(item.getDeviceLibraryIdentifier())) {
+//                registration = Optional.of(item);
+//                break;
+//            }
+//        }
 
         if (!registration.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -5,7 +5,7 @@ database:
 
     password: postgres
 
-    url: jdbc:postgresql://postgres:postgres@localhost:5433/passbook_example
+    url: jdbc:postgresql://localhost:5433/passbook_example
 
     properties:
         charSet: UTF-8
@@ -26,11 +26,15 @@ database:
 
     properties:
         hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate.show_sql: true
 
-#logging:
-#
-#    level: INFO
-#
-#    archivedLogFilenamePattern: ./logs/passbook-%d.logEntry.gz
-#
-#    archivedFileCount: 10
+logging:
+    level: INFO
+
+    loggers:
+        "org.hibernate.*": DEBUG
+
+    console:
+        enabled: true
+
+        threshold: ALL

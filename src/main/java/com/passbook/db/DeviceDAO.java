@@ -1,5 +1,6 @@
 package com.passbook.db;
 
+import com.google.common.base.Optional;
 import com.passbook.core.Device;
 import com.yammer.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
@@ -12,17 +13,16 @@ public class DeviceDAO extends AbstractDAO<Device> {
         super(sessionFactory);
     }
 
-    public Device findByPassTypeIdentifierAndSerialNumber(String passTypeIdentifier, String serialNumber) {
-        return (Device) namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber")
+    public Optional<Device> findByPassTypeIdentifierAndSerialNumber(String passTypeIdentifier, String serialNumber) {
+        return Optional.fromNullable(uniqueResult(namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndSerialNumber")
                 .setString("passTypeIdentifier", passTypeIdentifier)
-                .setString("serialNumber", serialNumber).uniqueResult();
+                .setString("serialNumber", serialNumber)));
     }
 
     public List<Device> findByPassTypeIdentifierAndDeviceLibraryIdentifier(String passTypeIdentifier, String deviceLibraryIdentifier) {
-        return namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier")
+        return list(namedQuery("com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier")
                 .setString("passTypeIdentifier", passTypeIdentifier)
-                .setString("deviceLibraryIdentifier", deviceLibraryIdentifier)
-                .list();
+                .setString("deviceLibraryIdentifier", deviceLibraryIdentifier));
     }
 
 }

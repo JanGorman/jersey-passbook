@@ -14,7 +14,7 @@ public class PassbookConfiguration extends Configuration {
     @JsonProperty
     private DatabaseConfiguration database = new DatabaseConfiguration();
 
-    public DatabaseConfiguration getDatabase() {
+    public DatabaseConfiguration getDatabaseConfiguration() {
         return database;
     }
 }
