@@ -51,7 +51,8 @@ public class PassbookDevicesResource {
     public Response getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                      @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                      @PathParam("updatedSince") Long updatedSince) {
-        List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(deviceLibraryIdentifier, passTypeIdentifier);
+        List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(deviceLibraryIdentifier,
+                passTypeIdentifier);
         if (result.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

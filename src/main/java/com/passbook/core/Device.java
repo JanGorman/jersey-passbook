@@ -9,6 +9,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Table(name = "passbook_devices")
@@ -21,9 +22,11 @@ import java.util.Map;
         ),
         @NamedQuery(
                 name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
-                query = "SELECT d FROM Device d WHERE d.passTypeIdentifier = :passTypeIdentifier "
-//                        "JOIN Registration r ON d.id = r.id " +
-//                        "AND r.deviceLibraryIdentifier = :deviceLibraryIdentifier"
+                query = "SELECT d FROM Device d " +
+                        "LEFT JOIN d.registrations r " +
+                        "WHERE d.id = r.id " +
+                        "AND d.passTypeIdentifier = :passTypeIdentifier " +
+                        "AND r.deviceLibraryIdentifier = :deviceLibraryIdentifier"
         )
 })
 public class Device {
@@ -53,7 +56,8 @@ public class Device {
     @Column(name = "updated_at", nullable = false)
     private Timestamp updatedAt;
 
-//    private Set<Registration> registrations;
+    @OneToMany(targetEntity = Registration.class, mappedBy = "device", fetch = FetchType.LAZY)
+    private Set<Registration> registrations;
 
     public long getId() {
         return id;
@@ -111,13 +115,13 @@ public class Device {
         this.updatedAt = updatedAt;
     }
 
-    //    public Set<Registration> getRegistrations() {
-//        return registrations;
-//    }
-//
-//    public void setRegistrations(Set<Registration> registrations) {
-//        this.registrations = registrations;
-//    }
+    public Set<Registration> getRegistrations() {
+        return registrations;
+    }
+
+    public void setRegistrations(Set<Registration> registrations) {
+        this.registrations = registrations;
+    }
 
     @Override
     public String toString() {
@@ -129,7 +133,7 @@ public class Device {
                 .add("data", data)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
-//                .add("registrations", registrations)
+                .add("registrations", registrations)
                 .toString();
     }
 }
