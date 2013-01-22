@@ -32,7 +32,7 @@ logging:
     level: INFO
 
     loggers:
-        com.passbook.*: DEBUG
+        "com.passbook.resources.*": ALL
 
         org.hibernate.SQL: ALL
 

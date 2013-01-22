@@ -94,6 +94,7 @@ public class PassbookDevicesResource {
         }
 
         // Already registered?
+
         for (Registration registration : device.get().getRegistrations()) {
             if (pushToken.getPushToken().equals(registration.getPushToken())) {
                 return Response.ok().build();
@@ -129,12 +130,12 @@ public class PassbookDevicesResource {
         }
 
         Optional<Registration> registration = Optional.absent();
-//        for (Registration item : device.getRegistrations()) {
-//            if (deviceLibraryIdentifier.equals(item.getDeviceLibraryIdentifier())) {
-//                registration = Optional.of(item);
-//                break;
-//            }
-//        }
+        for (Registration item : device.get().getRegistrations()) {
+            if (deviceLibraryIdentifier.equals(item.getDeviceLibraryIdentifier())) {
+                registration = Optional.of(item);
+                break;
+            }
+        }
 
         if (!registration.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();

@@ -92,7 +92,6 @@ public class Registration {
                 .add("pushToken", pushToken)
                 .add("createdAt", createdAt)
                 .add("updatedAt", updatedAt)
-                .add("device", device)
                 .toString();
     }
 }
