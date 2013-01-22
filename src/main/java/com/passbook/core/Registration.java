@@ -11,13 +11,13 @@ import java.sql.Timestamp;
 @NamedQueries({
         @NamedQuery(
                 name = "com.passbook.core.Registration.destroy",
-                query = "DELETE FROM Registration WHERE deviceLibraryIdentifier = :deviceLibraryIdentifier"
+                query = "DELETE Registration WHERE deviceLibraryIdentifier = :deviceLibraryIdentifier"
         )
 })
 public class Registration {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Index(name = "device_library_identifier_idx")

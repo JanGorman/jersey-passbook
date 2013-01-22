@@ -33,7 +33,7 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="passbook_devices_id" type="bigint"/>
+            <column name="device_id" type="bigint"/>
             <column name="device_library_identifier" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>

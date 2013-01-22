@@ -32,7 +32,7 @@ import java.util.Set;
 public class Device {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Index(name = "pass_type_identifier_idx")

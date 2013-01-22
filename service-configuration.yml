@@ -32,7 +32,9 @@ logging:
     level: INFO
 
     loggers:
-        "org.hibernate.*": DEBUG
+        com.passbook.*: DEBUG
+
+        org.hibernate.SQL: ALL
 
     console:
         enabled: true

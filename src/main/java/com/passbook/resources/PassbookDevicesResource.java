@@ -13,6 +13,7 @@ import com.passbook.helper.Authenticator;
 import com.yammer.dropwizard.hibernate.UnitOfWork;
 
 import javax.annotation.Nullable;
+import javax.validation.Valid;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -82,7 +83,7 @@ public class PassbookDevicesResource {
                                    @PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
                                    @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                    @PathParam("serialNumber") String serialNumber,
-                                   PushToken pushToken) {
+                                   @Valid PushToken pushToken) {
         Optional<Device> device = deviceDAO.findByPassTypeIdentifierAndSerialNumber(passTypeIdentifier, serialNumber);
         if (!device.isPresent()) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -93,16 +94,18 @@ public class PassbookDevicesResource {
         }
 
         // Already registered?
-//        for (Registration registration : device.getRegistrations()) {
-//            if (pushToken.getPushToken().equals(registration.getPushToken())) {
-//                return Response.ok().build();
-//            }
-//        }
+        for (Registration registration : device.get().getRegistrations()) {
+            if (pushToken.getPushToken().equals(registration.getPushToken())) {
+                return Response.ok().build();
+            }
+        }
 
         Registration registration = new Registration();
         registration.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         registration.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
         registration.setDeviceLibraryIdentifier(deviceLibraryIdentifier);
+        registration.setPushToken(pushToken.getPushToken());
+        registration.setDevice(device.get());
 
         registrationDAO.create(registration);
 
