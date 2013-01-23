@@ -23,9 +23,8 @@ import java.util.Set;
         @NamedQuery(
                 name = "com.passbook.core.Device.findByPassTypeIdentifierAndDeviceLibraryIdentifier",
                 query = "SELECT d FROM Device d " +
-                        "LEFT JOIN d.registrations r " +
-                        "WHERE d.id = r.id " +
-                        "AND d.passTypeIdentifier = :passTypeIdentifier " +
+                        "JOIN d.registrations r " +
+                        "WHERE d.passTypeIdentifier = :passTypeIdentifier " +
                         "AND r.deviceLibraryIdentifier = :deviceLibraryIdentifier"
         )
 })

@@ -48,20 +48,22 @@ public class PassbookDevicesResource {
 
     @GET
     @UnitOfWork
-    @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{updatedSince}")
-    public Response getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
-                                     @PathParam("passTypeIdentifier") String passTypeIdentifier,
-                                     @PathParam("updatedSince") Long updatedSince) {
-        List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(deviceLibraryIdentifier,
-                passTypeIdentifier);
+    @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}")
+    public List<Pass> getSerialNumbers(@PathParam("deviceLibraryIdentifier") String deviceLibraryIdentifier,
+                                       @PathParam("passTypeIdentifier") String passTypeIdentifier,
+                                       @QueryParam("passesUpdatedSince") Optional<Long> updatedSince) {
+        List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(passTypeIdentifier,
+                deviceLibraryIdentifier
+        );
+
         if (result.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+            throw new WebApplicationException(Response.Status.NOT_FOUND);
         }
 
         List<Device> passes = Lists.newArrayList();
-        if (updatedSince != null) {
+        if (updatedSince.isPresent()) {
             for (Device device : result) {
-                if (device.getUpdatedAt().getTime() > updatedSince) {
+                if (device.getUpdatedAt().getTime() > updatedSince.get()) {
                     passes.add(device);
                 }
             }
@@ -73,7 +75,7 @@ public class PassbookDevicesResource {
             throw new WebApplicationException(Response.Status.NO_CONTENT);
         }
 
-        return Response.ok(Lists.transform(passes, TRANSFORM).toArray()).build();
+        return Lists.transform(passes, TRANSFORM);
     }
 
     @POST
