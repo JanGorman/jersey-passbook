@@ -53,8 +53,7 @@ public class PassbookDevicesResource {
                                        @PathParam("passTypeIdentifier") String passTypeIdentifier,
                                        @QueryParam("passesUpdatedSince") Optional<Long> updatedSince) {
         List<Device> result = deviceDAO.findByPassTypeIdentifierAndDeviceLibraryIdentifier(passTypeIdentifier,
-                deviceLibraryIdentifier
-        );
+                deviceLibraryIdentifier);
 
         if (result.isEmpty()) {
             throw new WebApplicationException(Response.Status.NOT_FOUND);
