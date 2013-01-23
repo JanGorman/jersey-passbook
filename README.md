@@ -2,7 +2,7 @@
 
 # jersey-passbook
 
-jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersery](http://jersey.java.net/ "Jersery") and based on the very excellent [Dropwizard](http://dropwizard.codahale.com/ "Dropwizard") framework. This isn't your grand dad's barnacle-encrusted Java code of bygone eras. It's succinct and has all the lovely performance advantages of the JVM.
+jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersey](http://jersey.java.net/ "Jersey") and based on the very excellent [Dropwizard](http://dropwizard.codahale.com/ "Dropwizard") framework. This isn't your grand dad's barnacle-encrusted Java code of bygone eras. It's succinct and has all the lovely performance advantages of the JVM.
 
 ## Requirements
 
@@ -30,7 +30,7 @@ There's also a Procfile for [foreman](https://github.com/ddollar/foreman "forema
 foreman start
 ```
 
-For more info on getting up and running with dropwizard projects, check out the comprehensive [dropwizard documentation](http://dropwizard.codahale.com/getting-started/ "dropwizard documentation").
+For more info on getting up and running with dropwizard projects, check out the comprehensive [Dropwizard documentation](http://dropwizard.codahale.com/getting-started/ "Dropwizard documentation").
 
 ## Example
 
