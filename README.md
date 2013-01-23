@@ -2,15 +2,35 @@
 
 # jersey-passbook
 
-TODO
+jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersery](http://jersey.java.net/ "Jersery") and based on the very excellent [Dropwizard](http://dropwizard.codahale.com/ "Dropwizard") framework. This isn't your grand dad's barnacle-encrusted Java code of bygone eras. It's succinct and has all the lovely performance advantages of the JVM.
 
 ## Requirements
 
-TODO
+- Java
+- Maven
+- Postgres 9.1 (I like Postgres and I make use of hstore – if you need to replace it with something else, it will require some amount of extra work)
 
-## Installation
+## Getting started
 
-TODO
+To get cracking, check out the project and build a nice fat jar.
+
+```
+mvn package
+```
+
+After that it's off to running the project:
+
+```
+java -jar target/jersey-passbook-1.0.jar server service-configuration.yml
+```
+
+There's also a Procfile for [foreman](https://github.com/ddollar/foreman "foreman"), if you prefer that, you can also just run
+
+```
+foreman start
+```
+
+For more info on getting up and running with dropwizard projects, check out the comprehensive [dropwizard documentation](http://dropwizard.codahale.com/getting-started/ "dropwizard documentation").
 
 ## Example
 

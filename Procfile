@@ -1,0 +1,1 @@
+web: java -jar target/jersey-passbook-1.0.jar server service-configuration.yml
