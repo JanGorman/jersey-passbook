@@ -12,7 +12,7 @@ jersey-passbook is an example implementation of the [Apple Passbook Specificatio
 
 ## Getting started
 
-To get cracking, check out the project and build a nice fat jar.
+To get cracking, check out the project and build a nice fat jar (A single jar file which contains all of the class files required to run the service):
 
 ```
 mvn package
@@ -24,7 +24,7 @@ After that it's off to running the project:
 java -jar target/jersey-passbook-1.0.jar server service-configuration.yml
 ```
 
-There's also a Procfile for [foreman](https://github.com/ddollar/foreman "foreman"), if you prefer that, you can also just run
+There's also a Procfile for [foreman](https://github.com/ddollar/foreman "foreman"), if you prefer that. You can just run:
 
 ```
 foreman start
