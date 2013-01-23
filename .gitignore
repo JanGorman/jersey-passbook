@@ -1,4 +1,4 @@
-### /Users/jangorman/.gitignore-boilerplates/Java.gitignore
+### .gitignore-boilerplates/Java.gitignore
 
 *.class
 
@@ -10,7 +10,7 @@
 target/
 
 
-### /Users/jangorman/.gitignore-boilerplates/Global/IntelliJ.gitignore
+### .gitignore-boilerplates/Global/IntelliJ.gitignore
 
 *.iml
 *.ipr
