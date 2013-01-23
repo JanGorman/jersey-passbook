@@ -3,6 +3,7 @@ package com.passbook.resources;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import com.passbook.api.Pass;
 import com.passbook.api.PushToken;
 import com.passbook.core.Device;
@@ -45,7 +46,6 @@ public class PassbookDevicesResource {
         this.registrationDAO = registrationDAO;
     }
 
-
     @GET
     @UnitOfWork
     @Path("{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}")
@@ -74,6 +74,8 @@ public class PassbookDevicesResource {
         if (passes.isEmpty()) {
             throw new WebApplicationException(Response.Status.NO_CONTENT);
         }
+
+        Ordering.natural().onResultOf(DeviceOrdering.GET_UPDATED_AT).max(passes);
 
         return Lists.transform(passes, TRANSFORM);
     }
