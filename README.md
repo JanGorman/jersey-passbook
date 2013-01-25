@@ -54,6 +54,28 @@ So here we're registering a device with deviceLibraryIdentifier, passTypeIdentif
 
 And finally, there's the HTTP_AUTHORIZATION header which always is set to ApplePass followed by a space followed by the pass’s authorization token as specified in the pass.
 
+### Getting the Serial Numbers for Passes Associated with a Device
+
+```bash
+$ http GET http://0.0.0.0:8080/v1/devices/deviceLibraryIdentifier/registrations/passTypeIdentifier?passesUpdatedSince=tag
+```
+
+If there are matching passes, we'll receive a JSON dictionary with:
+
+```json
+{
+  "lastUpdated": "timestamp",
+  "serialNumbers": [
+    "serial1",
+    "serial2"
+  ]
+}
+```
+
+If nothing's found, the service returns status code 204.
+
+There's the optional passesUpdatedSince URL parameter, jersey-passbook would expect a timestamp and filter the result on that timestamp.
+
 ## Licence
 
 jersey-passbook is available under the MIT licence. Please see LICENCE for further information.
