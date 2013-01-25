@@ -48,7 +48,7 @@ So here we're registering a device with deviceLibraryIdentifier, passTypeIdentif
 
 ```json
 {
-  pushToken: pushTokenValue
+  "pushToken": "pushTokenValue"
 }
 ```
 
