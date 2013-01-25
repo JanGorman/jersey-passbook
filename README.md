@@ -82,7 +82,7 @@ There's the optional passesUpdatedSince URL parameter, jersey-passbook would exp
 $ http GET http://0.0.0.0:8080/v1/passes/passTypeIdentifier/serialNumber HTTP_AUTHORIZATION:"ApplePass authenticationToken"
 ```
 
-This call returns the latest version of the requested passs. The response is a JSON dictionary with the pass data. The pass data is stored as hstore so it can basically be anything we need to store.
+This call returns the latest version of the requested passs. The response is a JSON dictionary with the pass data. The pass data is stored as hstore so it can basically be anything we want it to be:
 
 ```json
 {
@@ -93,6 +93,14 @@ This call returns the latest version of the requested passs. The response is a J
 ```
 
 The server will also set the proper lastModified value in the response header.
+
+### Unregistering a Device
+
+```bash
+$ http DELETE http://0.0.0.0:8080/v1/deviceLibraryIdentifier/registrations/passTypeIdentifier/serialNumber HTTP_AUTHORIZATION:"ApplePass authenticationToken"
+```
+
+Just return 200 OK or any other HTTP status code that is appropriate.
 
 ## Licence
 
