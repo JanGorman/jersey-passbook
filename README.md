@@ -105,7 +105,7 @@ Just returns 200 OK or any other HTTP status code that is appropriate.
 ### Logging Errors
 
 ```bash
-$ http POST http://0.0.0.0:8080/v1/log/ logs:=['error1', 'error2']
+$ http POST http://0.0.0.0:8080/v1/log/ logs:='["error1", "error2"]'
 ```
 
 Just returns 200 OK. As Apple puts it:
