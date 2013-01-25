@@ -76,6 +76,24 @@ If nothing's found, the service returns status code 204.
 
 There's the optional passesUpdatedSince URL parameter, jersey-passbook would expect a timestamp and filter the result on that timestamp.
 
+### Getting the Latest Version of a Pass
+
+```bash
+$ http GET http://0.0.0.0:8080/v1/passes/passTypeIdentifier/serialNumber HTTP_AUTHORIZATION:"ApplePass authenticationToken"
+```
+
+This call returns the latest version of the requested passs. The response is a JSON dictionary with the pass data. The pass data is stored as hstore so it can basically be anything we need to store.
+
+```json
+{
+  "foo": "bar",
+  "baz": "bat",
+  "xyz": 123
+}
+```
+
+The server will also set the proper lastModified value in the response header.
+
 ## Licence
 
 jersey-passbook is available under the MIT licence. Please see LICENCE for further information.
