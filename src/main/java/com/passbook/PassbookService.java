@@ -12,6 +12,7 @@ import com.yammer.dropwizard.config.Bootstrap;
 import com.yammer.dropwizard.config.Environment;
 import com.yammer.dropwizard.db.DatabaseConfiguration;
 import com.yammer.dropwizard.hibernate.HibernateBundle;
+import com.yammer.dropwizard.migrations.MigrationsBundle;
 
 public class PassbookService extends Service<PassbookConfiguration> {
 
@@ -30,6 +31,13 @@ public class PassbookService extends Service<PassbookConfiguration> {
     @Override
     public void initialize(Bootstrap<PassbookConfiguration> bootstrap) {
         bootstrap.addBundle(hibernate);
+
+        bootstrap.addBundle(new MigrationsBundle<PassbookConfiguration>() {
+            @Override
+            public DatabaseConfiguration getDatabaseConfiguration(PassbookConfiguration configuration) {
+                return configuration.getDatabaseConfiguration();
+            }
+        });
     }
 
     @Override
