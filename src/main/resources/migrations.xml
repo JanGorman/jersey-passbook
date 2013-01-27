@@ -11,13 +11,13 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="pass_type_identifier" type="varchar(255)">
+            <column name="pass_type_identifier" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="serial_number" type="varchar(255)">
+            <column name="serial_number" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="authentication_token" type="varchar(255)">
+            <column name="authentication_token" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="data" type="hstore"/>
@@ -34,10 +34,10 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="device_id" type="bigint"/>
-            <column name="device_library_identifier" type="varchar(255)">
+            <column name="device_library_identifier" type="text">
                 <constraints nullable="false"/>
             </column>
-            <column name="push_token" type="varchar(255)">
+            <column name="push_token" type="text">
                 <constraints nullable="false"/>
             </column>
             <column name="created_at" type="timestamp">

@@ -32,6 +32,24 @@ $ foreman start
 
 For more info on getting up and running with dropwizard projects, check out the comprehensive [Dropwizard documentation](http://dropwizard.codahale.com/getting-started/ "Dropwizard documentation").
 
+## Setup
+
+The database schema is includes. jersey-passbook makes use of [Liquibase](http://www.liquibase.org/ "Liquibase") for versioning the database. Further information how this integrates with Dropwizard can be found [here](http://dropwizard.codahale.com/manual/migrations/ "Dropwizard Migrations").
+
+First, setup the table:
+
+```sql
+CREATE DATABASE passbook_example;
+-- In case you don't have hstore set up yet, run the following command:
+CREATE EXTENSION hstore;
+```
+
+Then, to set up the tables, run this from the command line:
+
+```bash
+$ java -jar target/jersey-passbook-1.0.jar db migrate service-configuration.yml
+```
+
 ## Examples
 
 For details regarding expected response codes please refer to the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification").
