@@ -58,7 +58,7 @@ INSERT INTO passbook_devices (pass_type_identifier, serial_number, authenticatio
                       
 INSERT INTO passbook_registrations (device_id, device_library_identifier, push_token, created_at, updated_at)
                             SELECT id,
-                      			       'pushToken',
+                                   'pushToken',
                                    'deviceLibraryIdentifier',
                                    current_timestamp,
                                    current_timestamp
