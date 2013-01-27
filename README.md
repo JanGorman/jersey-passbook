@@ -50,6 +50,22 @@ Then, to set up the tables, run this from the command line:
 $ java -jar target/jersey-passbook-1.0.jar db migrate service-configuration.yml
 ```
 
+If you want, you can also insert some test data into the tables to run the examples below:
+
+```sql
+INSERT INTO passbook_devices (pass_type_identifier, serial_number, authentication_token, data, created_at, updated_at)
+                      VALUES ('passTypeIdentifier', 'serialNumber', 'authenticationToken', 'foo=>bar,baz=>bat,xyz=>123'::hstore, current_timestamp, current_timestamp);
+                      
+INSERT INTO passbook_registrations (device_id, device_library_identifier, push_token, created_at, updated_at)
+                            SELECT id,
+                      			       'pushToken',
+                                   'deviceLibraryIdentifier',
+                                   current_timestamp,
+                                   current_timestamp
+                              FROM passbook_devices
+                             WHERE pass_type_identifier = 'passTypeIdentifier';
+```
+
 ## Examples
 
 For details regarding expected response codes please refer to the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification").
