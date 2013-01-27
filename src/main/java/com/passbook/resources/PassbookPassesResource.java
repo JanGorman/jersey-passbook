@@ -1,8 +1,6 @@
 package com.passbook.resources;
 
 import com.google.common.base.Optional;
-import com.passbook.api.Pass;
-import com.passbook.api.PassData;
 import com.passbook.core.Device;
 import com.passbook.db.DeviceDAO;
 import com.passbook.helper.Authenticator;
@@ -48,7 +46,7 @@ public class PassbookPassesResource {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
 
-        return Response.ok(new PassData(device.get().getData()))
+        return Response.ok(device.get().getData())
                 .lastModified(new DateTime(device.get().getUpdatedAt(), DateTimeZone.UTC).toDate())
                 .build();
     }
