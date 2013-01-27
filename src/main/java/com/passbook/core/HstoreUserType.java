@@ -46,14 +46,13 @@ public class HstoreUserType implements UserType {
     @Override
     public void nullSafeSet(PreparedStatement preparedStatement, Object o, int i, SessionImplementor sessionImplementor)
             throws HibernateException, SQLException {
-        String s = HstoreHelper.toString((Map<String, String>) o);
+        String s = HstoreHelper.toString((Map) o);
         preparedStatement.setObject(i, s, Types.OTHER);
     }
 
     @Override
     public Object deepCopy(Object o) throws HibernateException {
-        Map map = (Map) o;
-        return new HashMap<String, String>(map);
+        return new HashMap<String, String>((Map) o);
     }
 
     @Override

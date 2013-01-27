@@ -17,7 +17,9 @@ public class HstoreHelper {
         StringBuilder builder = new StringBuilder();
         int size = map.size();
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            builder.append("\"" + entry.getKey() + "\"" + SEPARATOR + "\"" + entry.getKey() + "\"");
+            builder.append(entry.getKey());
+            builder.append(SEPARATOR);
+            builder.append(entry.getValue());
             if (size > 1) {
                 builder.append(", ");
                 size--;
@@ -29,7 +31,7 @@ public class HstoreHelper {
 
     public static Map<String, String> toMap(String s) {
         Map<String, String> map = Maps.newHashMap();
-        if (!StringUtils.isBlank(s)) {
+        if (StringUtils.isBlank(s)) {
             return map;
         }
 
