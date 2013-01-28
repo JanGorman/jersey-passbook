@@ -34,7 +34,7 @@ For more info on getting up and running with dropwizard projects, check out the 
 
 ## Setup
 
-The database schema is includeded. jersey-passbook makes use of [Liquibase](http://www.liquibase.org/ "Liquibase") for versioning the database. Further information how this integrates with Dropwizard can be found [here](http://dropwizard.codahale.com/manual/migrations/ "Dropwizard Migrations").
+The database schema is included. jersey-passbook makes use of [Liquibase](http://www.liquibase.org/ "Liquibase") for versioning the database. Further information how this integrates with Dropwizard can be found [here](http://dropwizard.codahale.com/manual/migrations/ "Dropwizard Migrations").
 
 First, setup the table:
 
