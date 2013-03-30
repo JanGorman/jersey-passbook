@@ -1,5 +1,7 @@
 ![Apple Passbook](http://images.apple.com/ios/whats-new/images/title_passbook.png)
 
+[![Build Status](https://travis-ci.org/JanGorman/jersey-passbook.png)](https://travis-ci.org/JanGorman/jersey-passbook)
+
 # jersey-passbook
 
 jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersey](http://jersey.java.net/ "Jersey") and based on the very excellent [Dropwizard](http://dropwizard.codahale.com/ "Dropwizard") framework. This isn't your grand dad's barnacle-encrusted Java code of bygone eras. It's succinct and has all the lovely performance advantages of the JVM.
