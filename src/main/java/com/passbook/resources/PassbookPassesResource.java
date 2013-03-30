@@ -7,8 +7,6 @@ import com.passbook.helper.Authenticator;
 import com.yammer.dropwizard.hibernate.UnitOfWork;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -22,8 +20,6 @@ import javax.ws.rs.core.Response;
 @Path("/v1/passes")
 @Produces(MediaType.APPLICATION_JSON)
 public class PassbookPassesResource {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PassbookPassesResource.class);
 
     private final DeviceDAO deviceDAO;
 

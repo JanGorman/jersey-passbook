@@ -1,13 +1,29 @@
 package com.passbook.core;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.Map;
 
 public class HstoreHelper {
 
     private static final String SEPARATOR = "=>";
+
+    private static final Predicate<String> IS_BLANK = matchesAllOf(CharMatcher.WHITESPACE);
+
+    private static final Predicate<String> IS_NULL_OR_BLANK = Predicates.and(Predicates.notNull(), IS_BLANK);
+
+    private static final Predicate<String> matchesAllOf(final CharMatcher charMatcher) {
+        return new Predicate<String>() {
+            @Override
+            public boolean apply(@Nullable String s) {
+                return charMatcher.matchesAllOf(s);
+            }
+        };
+    }
 
     public static String toString(Map<String, String> map) {
         if (map.isEmpty()) {
@@ -31,7 +47,7 @@ public class HstoreHelper {
 
     public static Map<String, String> toMap(String s) {
         Map<String, String> map = Maps.newHashMap();
-        if (StringUtils.isBlank(s)) {
+        if (s == null || IS_NULL_OR_BLANK.apply(s)) {
             return map;
         }
 
