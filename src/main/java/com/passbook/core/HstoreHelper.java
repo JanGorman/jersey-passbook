@@ -8,7 +8,7 @@ import com.google.common.collect.Maps;
 import javax.annotation.Nullable;
 import java.util.Map;
 
-public class HstoreHelper {
+class HstoreHelper {
 
     private static final String SEPARATOR = "=>";
 
@@ -16,7 +16,7 @@ public class HstoreHelper {
 
     private static final Predicate<String> IS_NULL_OR_BLANK = Predicates.and(Predicates.notNull(), IS_BLANK);
 
-    private static final Predicate<String> matchesAllOf(final CharMatcher charMatcher) {
+    private static Predicate<String> matchesAllOf(final CharMatcher charMatcher) {
         return new Predicate<String>() {
             @Override
             public boolean apply(@Nullable String s) {

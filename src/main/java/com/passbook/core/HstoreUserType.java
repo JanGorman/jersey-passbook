@@ -12,7 +12,7 @@ import java.sql.Types;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HstoreUserType implements UserType {
+class HstoreUserType implements UserType {
 
     @Override
     public int[] sqlTypes() {

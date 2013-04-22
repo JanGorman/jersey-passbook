@@ -7,7 +7,7 @@ import com.yammer.dropwizard.db.DatabaseConfiguration;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-public class PassbookConfiguration extends Configuration {
+class PassbookConfiguration extends Configuration {
 
     @Valid
     @NotNull
