@@ -1,4 +1,4 @@
-![Apple Passbook](https://github-camo.global.ssl.fastly.net/47c495f6c6ad48b206dd11de9bc9196d3b963002/687474703a2f2f636c2e6c792f4a506a632f7469746c655f70617373626f6f6b2e706e67)
+![Apple Passbook](http://upload.wikimedia.org/wikipedia/en/b/b1/Passbook_icon_ios_8.jpg)
 
 [![Build Status](https://travis-ci.org/JanGorman/jersey-passbook.png)](https://travis-ci.org/JanGorman/jersey-passbook)
 
