@@ -1,10 +1,8 @@
-![Apple Passbook](http://upload.wikimedia.org/wikipedia/en/b/b1/Passbook_icon_ios_8.jpg)
-
 [![Build Status](https://travis-ci.org/JanGorman/jersey-passbook.png)](https://travis-ci.org/JanGorman/jersey-passbook)
 
 # jersey-passbook
 
-jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersey](http://jersey.java.net/ "Jersey") and based on the very excellent [Dropwizard](http://dropwizard.codahale.com/ "Dropwizard") framework. This isn't your grand dad's barnacle-encrusted Java code of bygone eras.
+jersey-passbook is an example implementation of the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification") running on [Jersey](https://jersey.github.io "Jersey") and based on the very excellent [Dropwizard](http://www.dropwizard.io "Dropwizard") framework.
 
 ## Requirements
 
@@ -32,11 +30,11 @@ There's also a Procfile for [foreman](https://github.com/ddollar/foreman "forema
 $ foreman start
 ```
 
-For more info on getting up and running with dropwizard projects, check out the comprehensive [Dropwizard documentation](http://dropwizard.codahale.com/getting-started/ "Dropwizard documentation").
+For more info on getting up and running with dropwizard projects, check out the comprehensive [Dropwizard documentation](http://www.dropwizard.io/1.1.0/docs/getting-started.html "Dropwizard documentation").
 
 ## Setup
 
-The database schema is included. jersey-passbook makes use of [Liquibase](http://www.liquibase.org/ "Liquibase") for versioning the database. Further information how this integrates with Dropwizard can be found [here](http://dropwizard.codahale.com/manual/migrations/ "Dropwizard Migrations").
+The database schema is included. jersey-passbook makes use of [Liquibase](http://www.liquibase.org/ "Liquibase") for versioning the database. Further information how this integrates with Dropwizard can be found [here](http://www.dropwizard.io/1.1.0/docs/manual/migrations.html "Dropwizard Migrations").
 
 First, setup the table:
 
@@ -70,7 +68,7 @@ INSERT INTO passbook_registrations (device_id, device_library_identifier, push_t
 
 ## Examples
 
-For details regarding expected response codes please refer to the [Apple Passbook Specification](https://developer.apple.com/library/prerelease/ios/#documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification").
+For details regarding expected response codes please refer to the [Apple Passbook Specification](https://developer.apple.com/library/content/documentation/PassKit/Reference/PassKit_WebService/WebService.html "Apple Passbook Specification").
 
 For testing http calls, I can highly recommend [httpie](https://github.com/jkbr/httpie "httpie").
 
