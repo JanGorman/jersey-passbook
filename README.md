@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JanGorman/jersey-passbook.png)](https://travis-ci.org/JanGorman/jersey-passbook)
+[![Build Status](https://travis-ci.org/JanGorman/jersey-passbook.svg?branch=master)](https://travis-ci.org/JanGorman/jersey-passbook)
 
 # jersey-passbook
 
